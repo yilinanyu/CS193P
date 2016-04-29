@@ -41,6 +41,9 @@ class ViewController: UIViewController {
             if mathematicalSymble == "∏"{
                 displayValue = M_PI
             }
+            if mathematicalSymble == "√"{
+                displayValue = sqrt(displayValue)
+            }
         }
     }
 }
