@@ -7,4 +7,13 @@
 //
 
 import Foundation
- 
+class CalculatorBrain{
+    
+    func setOperand (operand: Double){}
+    func perfornOperation(symble: String){}
+    var result : Double {
+        get {
+            return 0.0
+        }
+    }
+}
