@@ -10,9 +10,9 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var display: UILabel!
-    var userIsInyhrMiddleofTyping = false
-    @IBAction func touchButton(sender: UIButton) {
+    @IBOutlet private weak var display: UILabel!
+    private var userIsInyhrMiddleofTyping = false
+    @IBAction private func touchButton(sender: UIButton) {
         let digit = sender.currentTitle!
       
         if userIsInyhrMiddleofTyping {
@@ -25,7 +25,7 @@ class ViewController: UIViewController {
         }
         userIsInyhrMiddleofTyping = true
     }
-    var displayValue: Double {
+    private var displayValue: Double {
         get{
             return Double(display.text!)!
             
@@ -35,16 +35,18 @@ class ViewController: UIViewController {
             
         }
     }
-    @IBAction func performOperation(sender: UIButton) {
-        userIsInyhrMiddleofTyping = false
-        if let mathematicalSymble = sender.currentTitle{
-            if mathematicalSymble == "∏"{
-                displayValue = M_PI
-            }
-            if mathematicalSymble == "√"{
-                displayValue = sqrt(displayValue)
-            }
+    private var brain = CalculatorBrain()
+    
+    @IBAction private func performOperation(sender: UIButton) {
+        if userIsInyhrMiddleofTyping{
+            brain.setOperand(displayValue)
+            userIsInyhrMiddleofTyping = false
         }
+        
+        if let mathematicalSymble = sender.currentTitle{
+            brain.perfornOperation(mathematicalSymble)
+        }
+        displayValue = brain.result
     }
 }
 
