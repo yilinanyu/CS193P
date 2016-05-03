@@ -7,13 +7,40 @@
 //
 
 import Foundation
+
 class CalculatorBrain{
     
-    func setOperand (operand: Double){}
-    func perfornOperation(symble: String){}
+    private var accumulator = 0.0
+    
+    func setOperand (operand: Double) {
+        accumulator = operand
+    }
+
+    var operations: Dictionary<String,Operation> = [
+        "∏": Operation.Constant(M_PI),
+        "e": Operation.Constant(M_E),
+        "√": Operation.UnaryOperation(sqrt), // sqrt
+        "cos": Operation.UnaryOperation(cos) // cos
+    ]
+    enum Operation {
+        case Constant(Double)
+        case UnaryOperation((Double) -> Double)
+        case BinaryOperation
+        case Equals
+    }
+
+    func perfornOperation(symbol: String){
+        if let operation = operations[symbol]{
+            switch operation {
+            case .Constant(let value): accumulator = value
+            case .UnaryOperation(let foo): accumulator = foo(accumulator)
+            default: break
+            }
+        }
+    }
     var result : Double {
         get {
-            return 0.0
+            return accumulator
         }
     }
 }
